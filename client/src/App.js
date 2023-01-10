@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/login';
 import Register from './pages/Register';
 import Navbar from './pages/Navbar';
+import Product from './pages/Product';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        
+        <Route path='/products' element={<Product />} />
       </Routes>
     </BrowserRouter>
   );
