@@ -2,10 +2,12 @@ import React from 'react'
 import books2 from './images/books2.jpg';
 import '../App.css';
 import ProductCard from './ProductCard';
+import Cart from './Cart';
 
 function Product() {
   return (
     <>
+       
         <div className="container">
             <ProductCard img = {books2} title='book1' price={100}/>
             <ProductCard img = {books2} title='book2' price={200}/>
@@ -21,6 +23,9 @@ function Product() {
             <ProductCard img = {books2} title='book8' price={800}/>
             <ProductCard img = {books2} title='book9' price={900}/>
         </div>
+
+        <Cart/>
+       
     </>
   )
 }
