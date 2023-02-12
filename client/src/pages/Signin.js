@@ -1,4 +1,4 @@
-import { Form , Input, Button } from 'antd'
+/*import { Form , Input, Button } from 'antd'
 import { Link, NavigationType, useNavigate } from 'react-router-dom'
 import {React, useState} from 'react'
 import toast from 'react-hot-toast';
@@ -6,19 +6,19 @@ import axios from 'axios';
 
 function Signin() {
     const navigate = useNavigate();
-    const [user, setUser] = useState({
+    /*const [user, setUser] = useState({
         email:"", password:""
     })
-    const onFinish = async (e) => {
-        /*
+    const onFinish = async (values) => {
+        
         try {
             const response = await axios.post('/api/user/login', values);
             if (response.data.success) {
                 toast.success(response.data.message);
                 toast("Redirecting to home page");
                 localStorage.setItem("token", response.data.token);
-                //navigate("/");
-                //console.log(localStorage.getItem("token"));
+                navigate("/");
+                console.log(localStorage.getItem("token"));
             }
             else {
                 toast.error(response.data.message);
@@ -26,7 +26,9 @@ function Signin() {
         } catch (error) {
           console.log(error);
             toast.error('Something went wrong');
-        }*/
+        }
+    };
+        /*
         const {email, password} = user;
         const res = await fetch("http://localhost:5000/api/user/login", {
             method:"POST",
@@ -42,9 +44,12 @@ function Signin() {
 
         if(data.status===500 || !data){
             console.log("Unsuccessful");
+            toast("Login Unsuccessful!!");
         }
         else{
             console.log("Successful");
+            localStorage.setItem("token", data);
+            toast("Login Successful!");
             navigate("/");
         }
     };
@@ -58,12 +63,12 @@ function Signin() {
       <div className="authentication">
             <div className="authentication-form card p-2">
                 <h1 className='card-title'>LOGIN</h1>
-                <Form layout='vertical' onFinish={onFinish}>
+                <Form layout='vertical'>
                     <Form.Item label='Email' >
-                        <Input name='email' placeholder='Email' onChange={changed}/>
+                        <Input placeholder='Email'/>
                     </Form.Item>
                     <Form.Item label='Password'>
-                        <Input name='password' placeholder='Password' type='password' onChange={changed}/>
+                        <Input placeholder='Password' type='password'/>
                     </Form.Item>
                     <Button className='primary-button mt-2 mb-2' htmlType='submit'>Login</Button>
                     <Link to='/register' className='anchor'>Click Here to Register</Link>
@@ -72,6 +77,58 @@ function Signin() {
             </div>
       </div>
     )
+}*/
+
+import { Button, Form, Input } from "antd";
+import React from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+function Signin() {
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/user/login", values);
+      
+      if (response.data.success) {
+        toast.success(response.data.message);
+        localStorage.setItem("token", response.data.data);
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      ;
+      toast.error("Something went wrong");
+    }
+  };
+
+  return (
+    <div className="authentication">
+      <div className="authentication-form card p-3">
+        <h1 className="card-title">Welcome Back</h1>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item label="Email" name="email">
+            <Input placeholder="Email" />
+          </Form.Item>
+          <Form.Item label="Password" name="password">
+            <Input placeholder="Password" type="password" />
+          </Form.Item>
+
+          
+          <Button className="primary-button my-2 full-width-button" htmlType="submit">
+            LOGIN
+          </Button>
+
+          <Link to="/register" className="anchor mt-2">
+            CLICK HERE TO REGISTER
+          </Link>
+         
+        </Form>
+      </div>
+    </div>
+  );
 }
 
 export default Signin

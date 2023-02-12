@@ -1,10 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import books2 from './images/books2.jpg';
 import Carousel from './Carousel';
 import ProductCard from './ProductCard';
 import '../App.css';
+import axios from 'axios';
 
 function Home() {
+  const getData = async () => {
+    try {
+      //dispatch(showLoading())
+      const response = await axios.post("/api/user/profile", {}, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      /*dispatch(hideLoading())
+      if (response.data.success) {
+        setDoctors(response.data.data);
+      }*/
+      console.log(response.data);
+    } catch (error) {
+      //dispatch(hideLoading())
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>  
         <Carousel/>

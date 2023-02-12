@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Signin from './pages/Signin';
@@ -8,6 +8,7 @@ import Product from './pages/Product';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
+  
   return (
     <BrowserRouter>
       <Toaster

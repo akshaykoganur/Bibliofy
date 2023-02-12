@@ -37,9 +37,11 @@ function Register() {
 
         if(data.status===500 || !data){
             console.log("Unsuccessful");
+            toast("Register Unsuccessful!!");
         }
         else{
             console.log("Successful");
+            toast("Register Successful!!");
             navigate("/login");
         }
     };
