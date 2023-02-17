@@ -38,6 +38,9 @@ function Navbar() {
         </ul>
         {localStorage.getItem("token") ? (
           <div className="d-flex">
+            <a className="btn text-secondary mx-1" href="/cart">
+              My Cart
+            </a>
             <a className="btn text-secondary mx-1" href="/profile">
               Profile
             </a>

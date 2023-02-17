@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import books2 from "./images/books2.jpg";
+//import books2 from "./images/books2.jpg";
 import "../App.css";
 import ProductCard from "./ProductCard";
 import Cart from "./Cart";
@@ -42,7 +42,7 @@ function Product() {
       </div>
       
       <hr></hr>
-      <Cart />
+      
     </>
   );
 }
