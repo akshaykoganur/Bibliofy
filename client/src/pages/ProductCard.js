@@ -1,19 +1,35 @@
-import React from 'react'
-import { useState } from 'react'
-import Cart from './Cart'
+import React, { useState } from 'react'
+import { useCart, useDispatchCart } from './ContextReducer';
+//import { useState } from 'react'
+//import Cart from './Cart'
+//import {useDispatchCart, useCart} from'./ContextReducer';
 
 function ProductCard(props) {
-  const clicked = async (props) => {
-    console.log(props.title);
+  const [qty, setQty] = useState(1);
+  let dispatch  = useDispatchCart()
+  let data = useCart();
+  const clicked = async () => {
+    let finalPrice = qty*props.bookItems.price;
+    await dispatch({type:"ADD",id:props.bookItems._id,name:props.bookItems.name,price:finalPrice,qty:qty});
+    console.log(data);
+    
   }
-
+  
+  //let bookSet = props.bookItems;
   return (
     <div className="card" style={{ width: "20rem", margin: "2%" }}>
-        <img src={props.img} className="card-img-top" alt="..." />
+        
         <div className="card-body">
-            <h5 className="card-title">{props.title}</h5>
+            <h5 className="card-title">{props.bookItems.name}</h5>
             <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a className="btn btn-primary" onClick={clicked}>{props.price}$</a>
+            <div><select onChange={(e) => setQty(e.target.value)}>
+              {Array.from(Array(6), (e,i) => {
+                return(
+                  <option key={i+1} value={i+1}>{i+1}</option>
+                )
+              })}
+            </select></div>
+            <button className="btn btn-primary" onClick={clicked}>{props.bookItems.price}$</button>
         </div>
     </div>
   )

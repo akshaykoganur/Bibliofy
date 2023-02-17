@@ -3,7 +3,12 @@ import React, { createContext, useContext, useReducer } from 'react'
 const CartStateContext = createContext();
 const CartDispatchContext = createContext();
 
-const reducer = (state, action) => {}
+const reducer = (state, action) => {
+    switch(action.type) {
+        case "ADD":
+            return [...state,{id:action.id,name:action.name,price:action.price,qty:action.qty}];
+    }
+}
 
 export const CartProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, []);
