@@ -6,8 +6,10 @@ require('dotenv').config();
 const dbconfig = require('./config/dbconfig');
 app.use(express.json());
 const userRoute = require('./routes/userRoute');
+const displayData = require('./routes/displayData');
 
 app.use('/api/user', userRoute);
+app.use('/api', displayData);
 
 const port = 5000;
 

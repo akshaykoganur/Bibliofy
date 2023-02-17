@@ -9,7 +9,10 @@ connection.on('connected', () => {
     const fetched = mongoose.connection.db.collection("booksData");
     fetched.find({}).toArray(function(err,data){
         if(err) console.log(err);
-        //else console.log(data);
+        else{
+            global.books = data;
+            //console.log(global.books);
+        }
     })
 })
 
