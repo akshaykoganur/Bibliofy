@@ -7,6 +7,8 @@ const reducer = (state, action) => {
     switch(action.type) {
         case "ADD":
             return [...state,{id:action.id,name:action.name,price:action.price,qty:action.qty}];
+        default:
+            console.log('Error in reducer');
     }
 }
 

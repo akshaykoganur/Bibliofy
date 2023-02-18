@@ -11,7 +11,7 @@ function Cart() {
       </div>
     )
   }
-  let totalPrice = data.reduce((total, books) => total + books.price, 0)
+  let totalPrice = 0
   return (
     <div>
       <div>
@@ -27,19 +27,18 @@ function Cart() {
           </thead>
           <tbody>
             {data.map((books, index) => (
-              <tr>
-                <th scope='row' >{index + 1}</th>
-                <td >{books.name}</td>
+              <tr key={index}>
+                <th scope='row'>{index + 1}</th>
+                <td>{books.name}</td>
                 <td>{books.qty}</td>
-                <td>{books.size}</td>
                 <td>{books.price}</td>
-                <td ><button type="button" className="btn p-0"><Delete onClick={() => { dispatch({ type: "REMOVE", index: index }) }} /></button> </td></tr>
+              </tr>
             ))}
           </tbody>
         </table>
         <div><h1 className='fs-2'>Total Price: {totalPrice}/-</h1></div>
         <div>
-          <button className='btn bg-success mt-5 ' onClick={handleCheckOut} > Check Out </button>
+          {/*<button className='btn bg-success mt-5 ' onClick={handleCheckOut} > Check Out </button>*/}
         </div>
       </div>
     </div>

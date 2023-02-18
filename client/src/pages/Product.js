@@ -29,7 +29,7 @@ function Product() {
         {dat !== [] ? (
           dat.map((data, idx) => {
             return (
-              <div className="row mb-3 fs-3 m-3">
+              <div key={idx} className="row mb-3 fs-3 m-3">
                 <div key={idx} className="col-12 col-md-6 col-lg-3">
                   <ProductCard bookItems={data} />
                 </div>

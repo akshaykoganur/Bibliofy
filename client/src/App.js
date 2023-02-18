@@ -8,8 +8,6 @@ import Product from "./pages/Product";
 import Profile from "./pages/Profile";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "./pages/ContextReducer";
-import Cart from "./pages/Cart";
-
 function App() {
   return (
     <CartProvider>
@@ -22,7 +20,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/products" element={<Product />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/cart" element={<Cart />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>

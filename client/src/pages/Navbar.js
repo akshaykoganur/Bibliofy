@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
+import Modal from "../Modal";
+import Cart from "./Cart";
 
 function Navbar() {
+  const [cartView, setCartView] = useState(false)
   const logout = async (e) => {
     localStorage.removeItem("token");
     toast.success("Logout Successful");
@@ -38,9 +41,10 @@ function Navbar() {
         </ul>
         {localStorage.getItem("token") ? (
           <div className="d-flex">
-            <a className="btn text-secondary mx-1" href="/cart">
+            <button className="btn text-secondary mx-1" onClick={() => setCartView(true)}>
               My Cart
-            </a>
+            </button>
+            {cartView ? <Modal onClose={() => setCartView(false)}><Cart></Cart></Modal> : ""}
             <a className="btn text-secondary mx-1" href="/profile">
               Profile
             </a>
