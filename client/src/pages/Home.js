@@ -14,10 +14,6 @@ function Home() {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
-      /*dispatch(hideLoading())
-      if (response.data.success) {
-        setDoctors(response.data.data);
-      }*/
       console.log(response.data);
     } catch (error) {
       //dispatch(hideLoading())
