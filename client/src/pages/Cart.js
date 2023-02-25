@@ -28,7 +28,7 @@ function Cart() {
           <tbody>
             {data.map((books, index) => (
               <tr key={index}>
-                <th scope='row'>{index + 1}</th>
+                <td scope='row'>{index + 1}</td>
                 <td>{books.name}</td>
                 <td>{books.qty}</td>
                 <td>{books.price}</td>
