@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
         if(userExists){
             return res.status(400).send({message: "User already exists", success: false}); //send the error that user with mail id already exists and we will not create another user with same id
         }
-        const password = req.body.password;     //to get the password
+        const password = await req.body.password;     //to get the password
         const salt = await bcrypt.genSalt(10);   //bcrpyt password
         const hashedPassword = await bcrypt.hash(password, salt);
         req.body.password = hashedPassword;
@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
         res.status(500).send({message:"Error creating message", success: false});
     }
 })
-
+/*
 router.post("/login", async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
@@ -50,7 +50,37 @@ router.post("/login", async (req, res) => {
         .status(500)
         .send({ message: "Error logging in", success: false, error });
     }
+  });*/
+
+  router.post("/login", async (req, res) => {
+    try {
+      const user = await User.findOne({ email: req.body.email });
+      if (!user) {
+        return res
+          .status(200)
+          .send({ message: "User does not exist", success: false });
+      }
+      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      if (!isMatch) {
+        return res
+          .status(200)
+          .send({ message: "Password is incorrect", success: false });
+      } else {
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+        res
+          .status(200)
+          .send({ message: "Login successful", success: true, data: token });
+      }
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .send({ message: "Error logging in", success: false, error });
+    }
   });
+  
 
 router.post('/profile', authMiddleware, async(req,res) => {
   try {

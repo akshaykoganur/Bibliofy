@@ -6,12 +6,12 @@ import axios from 'axios';
 
 function Signin() {
     const navigate = useNavigate();
-    /*const [user, setUser] = useState({
+    const [user, setUser] = useState({
         email:"", password:""
     })
     const onFinish = async (values) => {
         
-        try {
+        /*try {
             const response = await axios.post('/api/user/login', values);
             if (response.data.success) {
                 toast.success(response.data.message);
@@ -28,7 +28,7 @@ function Signin() {
             toast.error('Something went wrong');
         }
     };
-        /*
+        
         const {email, password} = user;
         const res = await fetch("http://localhost:5000/api/user/login", {
             method:"POST",
@@ -49,6 +49,7 @@ function Signin() {
         else{
             console.log("Successful");
             localStorage.setItem("token", data);
+            localStorage.setItem("userEmail", email);
             toast("Login Successful!");
             navigate("/");
         }
@@ -63,7 +64,7 @@ function Signin() {
       <div className="authentication">
             <div className="authentication-form card p-2">
                 <h1 className='card-title'>LOGIN</h1>
-                <Form layout='vertical'>
+                <Form layout='vertical' onFinish={onFinish}>
                     <Form.Item label='Email' >
                         <Input placeholder='Email'/>
                     </Form.Item>
@@ -77,32 +78,36 @@ function Signin() {
             </div>
       </div>
     )
-}*/
+    }*/
 
 import { Button, Form, Input } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signin() {
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
       const response = await axios.post("http://localhost:5000/api/user/login", values);
-      
       if (response.data.success) {
         toast.success(response.data.message);
         localStorage.setItem("token", response.data.data);
+        localStorage.setItem("userEmail", credentials.email);
         navigate("/");
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
-      ;
       toast.error("Something went wrong");
     }
   };
+  
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
 
   return (
     <div className="authentication">
@@ -110,10 +115,10 @@ function Signin() {
         <h1 className="card-title">Welcome Back</h1>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item label="Email" name="email">
-            <Input placeholder="Email" />
+            <Input placeholder="Email" name='email' value={credentials.email} onChange={onChange}/>
           </Form.Item>
           <Form.Item label="Password" name="password">
-            <Input placeholder="Password" type="password" />
+            <Input placeholder="Password" type="password" name='password' value={credentials.password} onChange={onChange}/>
           </Form.Item>
 
           

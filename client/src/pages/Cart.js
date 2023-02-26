@@ -1,19 +1,44 @@
 import React from 'react'
 import { useCart, useDispatchCart } from './ContextReducer';
+import books2 from './images/books2.jpg'
 
 function Cart() {
-  let data = useCart();
+  let dat = useCart();
   let dispatch = useDispatchCart();
-  if (data.length === 0) {
+  if (dat.length === 0) {
     return (
       <div>
         <div className='m-5 w-100 text-center fs-3'>The Cart is Empty!</div>
       </div>
     )
   }
-  let totalPrice = 0
+
+  const handleCheckOut = async () => {
+    let userEmail = localStorage.getItem("userEmail");
+    // console.log(data,localStorage.getItem("userEmail"),new Date())
+    let response = await fetch("http://localhost:5000/api/orderData", {
+      // credentials: 'include',
+      // Origin:"http://localhost:3000/login",
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        order_data: dat,
+        email: userEmail,
+        order_date: new Date().toDateString()
+      })
+    });
+    console.log("JSON RESPONSE:::::", response.status)
+    if (response.status === 200) {
+      dispatch({ type: "DROP" })
+    }
+  }
+
+  let totalPrice = dat.reduce((total, books) => total + books.price, 0);
   return (
     <div>
+      {console.log(dat)}
       <div>
         <table className='table table-hover'>
           <thead className='text-success fs-4'>
@@ -26,19 +51,20 @@ function Cart() {
             </tr>
           </thead>
           <tbody>
-            {data.map((books, index) => (
+            {dat.map((books, index) => (
               <tr key={index}>
-                <td scope='row'>{index + 1}</td>
+                <th scope='row'>{index + 1}</th>
                 <td>{books.name}</td>
                 <td>{books.qty}</td>
                 <td>{books.price}</td>
+                <td ><button type="button" className="btn p-0" onClick={() => { dispatch({ type: "REMOVE", index: index }) }}>D</button></td>
               </tr>
             ))}
           </tbody>
-        </table>
+            </table>
         <div><h1 className='fs-2'>Total Price: {totalPrice}/-</h1></div>
         <div>
-          {/*<button className='btn bg-success mt-5 ' onClick={handleCheckOut} > Check Out </button>*/}
+          <button className='btn bg-success mt-5 ' onClick={handleCheckOut} > Check Out </button>
         </div>
       </div>
     </div>

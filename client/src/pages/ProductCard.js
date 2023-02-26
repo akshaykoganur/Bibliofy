@@ -11,7 +11,8 @@ function ProductCard(props) {
   const clicked = async () => {
     let finalPrice = qty*props.bookItems.price;
     await dispatch({type:"ADD",id:props.bookItems._id,name:props.bookItems.name,price:finalPrice,qty:qty});
-    console.log(data);
+    
+    //console.log(data);
     
   }
   

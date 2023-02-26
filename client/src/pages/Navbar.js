@@ -7,6 +7,7 @@ function Navbar() {
   const [cartView, setCartView] = useState(false)
   const logout = async (e) => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
     toast.success("Logout Successful");
   };
   return (
